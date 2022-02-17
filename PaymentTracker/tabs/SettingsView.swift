@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct SettingsView: View {
     
@@ -21,7 +22,7 @@ struct SettingsView: View {
     private var build: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "[??]"
     
     @State private var showSwitcher: Bool = false;
-    @State private var iconIndex: Int = ["AppIcon", "Royalty", "Periwinkle", "Eyebite", "Subdued"].firstIndex{ ((UIApplication.shared.alternateIconName != nil) ? UIApplication.shared.alternateIconName! : Bundle.main.name!).starts(with: $0 ) } ?? 0
+    @State private var iconIndex: Int = GlobalProps.AppIcons.firstIndex{ ((UIApplication.shared.alternateIconName != nil) ? UIApplication.shared.alternateIconName! : Bundle.main.name!).starts(with: $0 ) } ?? 0
 
         
     var body: some View {
@@ -36,7 +37,7 @@ struct SettingsView: View {
                     Button {
                         showSwitcher.toggle()
                     } label: {
-                        Image(uiImage: UIImage(named: ["AppIcon", "Royalty", "Periwinkle", "Eyebite", "Subdued"][iconIndex]) ?? UIImage())
+                        Image(uiImage: UIImage(named: GlobalProps.AppIcons[iconIndex]) ?? UIImage())
                             .resizable()
                             .frame(width: 30, height: 30, alignment: .leading)
                             .cornerRadius(5)
@@ -44,7 +45,7 @@ struct SettingsView: View {
                     }
                 }
                 List {
-                    Section(header: Text("UI"), footer: Text("Notifications are always delivered at 12:01 AM.")) {
+                    Section(header: Text("UI"), footer: Text("Notifications are always delivered at 12:01 AM UTC.")) {
                         HStack {
                             Text("Default Page")
                                 .multilineTextAlignment(.leading)
@@ -62,36 +63,28 @@ struct SettingsView: View {
                                 .padding()
                                 .multilineTextAlignment(.leading)
                         }
-                        HStack {
-                            Text("Dark Mode")
-                                .multilineTextAlignment(.leading)
-                                .padding()
-                            Toggle("", isOn: $darkMode)
-                                .padding()
-                        }
-                        HStack {
-                            Text("Notifications")
-                                .multilineTextAlignment(.leading)
-                                .padding()
-                            Toggle("", isOn: $notifications)
-                                .onChange(of: notifications, perform: { _ in
-                                    if(caught) {
-                                        return;
-                                    } else {
-                                        return UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                                            if success && !caught {
-                                                return UserDefaults.standard.set(true, forKey: "notifications")
-                                            } else if let error = error {
-                                                print(error.localizedDescription)
-                                                return UserDefaults.standard.set(false, forKey: "notifications")
-                                            }
-                                        };
-                                    }
-                                })
-                                .padding()
-                        }
+                        Toggle("Dark Mode", isOn: $darkMode)
+                            .padding()
+                        Toggle("Notifications", isOn: $notifications)
+                            .onChange(of: notifications, perform: { _ in
+                                if(caught) {
+                                    return;
+                                } else {
+                                    return UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                                        if success && !caught {
+                                            return UserDefaults.standard.set(true, forKey: "notifications")
+                                        } else if let error = error {
+                                            print(error.localizedDescription)
+                                            return UserDefaults.standard.set(false, forKey: "notifications")
+                                        }
+                                    };
+                                }
+                            })
+                            .padding()
                     }
                     Section(header: Text("Currency"), footer: pricePreview(showSymbols: $showSymbols, showCC: $showCC, selectedCurrency: $selectedCurrency)) {
+                        
+                        //Weird work around for the label attribute not showing.
                         HStack {
                             Text("Default Currency")
                                 .multilineTextAlignment(.leading)
@@ -109,25 +102,18 @@ struct SettingsView: View {
                                 .padding()
                                 .multilineTextAlignment(.leading)
                         }
-                        HStack {
-                            Text("Show Symbols")
-                                .multilineTextAlignment(.leading)
-                                .padding()
-                            Spacer()
-                            Toggle("", isOn: $showSymbols)
-                                .padding()
-                        }
-                        HStack {
-                            Text("Show CCs")
-                                .multilineTextAlignment(.leading)
-                                .padding()
-                            Spacer()
-                            Toggle("", isOn: $showCC)
-                                .padding()
-                        }
                         
+                        //These labels work though...
+                        Toggle("Show Symbols", isOn: $showSymbols)
+                            .padding()
+                        Toggle("Show CCs", isOn: $showCC)
+                            .padding()
                     }
                     Section(header: Text("App Info"), footer: Text("Created by Axel Greavette")) {
+                        Link("Report a bug", destination: URL(string: "https://github.com/axelgrvt/payment-tracker/issues/new?labels=bug")!)
+                            .padding()
+                        Link("Suggest a feature", destination: URL(string: "https://github.com/axelgrvt/payment-tracker/issues/new?labels=feature")!)
+                            .padding()
                         HStack {
                             Text("Version")
                                 .multilineTextAlignment(.leading)
@@ -142,7 +128,7 @@ struct SettingsView: View {
                                 .multilineTextAlignment(.leading)
                                 .padding()
                             Spacer()
-                            Text("Sun., Feb 13th")
+                            Text("Thurs., Feb 17th")
                                 .multilineTextAlignment(.trailing)
                                 .padding()
                         }
@@ -164,25 +150,13 @@ struct pricePreview: View {
     var body: some View {
         VStack {
             if(showSymbols && showCC) {
-                Text("Prices will be shown with currency symbols and codes. For example:")
-                    .multilineTextAlignment(.leading)
-                Text(selectedCurrency.symbol + "100 " + selectedCurrency.rawValue.uppercased())
-                    .multilineTextAlignment(.leading)
+                Text(try! AttributedString(markdown: "Prices will be shown with currency symbols and codes. For example: **" + selectedCurrency.symbol + "100 " + selectedCurrency.rawValue.uppercased() + "**"))
             } else if (showSymbols && !showCC) {
-                Text("Prices will be shown with currency symbols. For example:")
-                    .multilineTextAlignment(.leading)
-                Text(selectedCurrency.symbol + "100")
-                    .multilineTextAlignment(.leading)
+                Text(try! AttributedString(markdown: "Prices will be shown with currency symbols. For example: **" + selectedCurrency.symbol + "100**"))
             } else if (showCC && !showSymbols){
-                Text("Prices will be shown with currency codes. For example: ")
-                    .multilineTextAlignment(.leading)
-                Text("100 " + selectedCurrency.rawValue.uppercased())
-                    .multilineTextAlignment(.leading)
+                Text(try! AttributedString(markdown: "Prices will be shown with currency codes. For example: **100 " + selectedCurrency.rawValue.uppercased() + "**"))
             } else {
-                Text("Prices will be shown without currency codes or symbols. For example:")
-                    .multilineTextAlignment(.leading)
-                Text("100")
-                    .multilineTextAlignment(.leading)
+                Text("Prices will be shown without currency codes or symbols. For example: **100**")
             }
         }
     }

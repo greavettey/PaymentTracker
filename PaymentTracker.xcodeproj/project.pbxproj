@@ -328,7 +328,7 @@
 		77C1FDB927ADBBF20081AFE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "Periwinkle Eyebite Subdued Royalty";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "Periwinkle Eyebite Subdued Royalty Light Turquoise Melons Midnight";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -363,7 +363,7 @@
 		77C1FDBA27ADBBF20081AFE6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "Periwinkle Eyebite Subdued Royalty";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "Periwinkle Eyebite Subdued Royalty Light Turquoise Melons Midnight";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;

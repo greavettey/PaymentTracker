@@ -53,5 +53,6 @@ enum StartPage: String, CaseIterable, Identifiable, Codable {
 }
 
 struct GlobalProps {
-    static var SupportedIcons: [String] = ["Kickstarter", "Amazon", "Steam", "Alibaba", "Walmart"]
+    static var SupportedIcons: [String] = ["Kickstarter", "Amazon", "Steam", "Alibaba", "Walmart", "Indigo", "Indiegogo", "Best Buy"]
+    static var AppIcons: [String] = ["AppIcon", "Royalty", "Periwinkle", "Eyebite", "Subdued", "Midnight", "Melons", "Turquoise"]
 }
