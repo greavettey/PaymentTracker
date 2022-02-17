@@ -1,55 +1,55 @@
 {
   "images" : [
     {
-      "filename" : "Bright-20@2x.png",
+      "filename" : "Royalty-20@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
-      "filename" : "Bright-20@3x.png",
+      "filename" : "Royalty-20@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
-      "filename" : "Bright-29@2x.png",
+      "filename" : "Royalty-29@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
-      "filename" : "Bright-29@3x.png",
+      "filename" : "Royalty-29@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
-      "filename" : "Bright-40@2x.png",
+      "filename" : "Royalty-40@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
-      "filename" : "Bright-40@3x.png",
+      "filename" : "Royalty-40@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
-      "filename" : "Bright-60@2x.png",
+      "filename" : "Royalty-60@2x.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
-      "filename" : "Bright-60@3x.png",
+      "filename" : "Royalty-60@3x.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
     },
     {
-      "filename" : "Bright-1024.png",
+      "filename" : "Royalty-1024.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
