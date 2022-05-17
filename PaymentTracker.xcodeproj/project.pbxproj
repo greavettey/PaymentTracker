@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7732E64F27B88DC00044C181 /* IconSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7732E64E27B88DC00044C181 /* IconSwitch.swift */; };
 		77C1FDAE27ADBBF00081AFE6 /* PaymentTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDAD27ADBBF00081AFE6 /* PaymentTrackerApp.swift */; };
 		77C1FDB027ADBBF00081AFE6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDAF27ADBBF00081AFE6 /* ContentView.swift */; };
 		77C1FDB227ADBBF20081AFE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77C1FDB127ADBBF20081AFE6 /* Assets.xcassets */; };
@@ -23,10 +22,25 @@
 		77C1FDD827B37DBE0081AFE6 /* CommonEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDD727B37DBE0081AFE6 /* CommonEnums.swift */; };
 		77C1FDDA27B464430081AFE6 /* EditForms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDD927B464430081AFE6 /* EditForms.swift */; };
 		77C1FDDC27B4B6C00081AFE6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDDB27B4B6C00081AFE6 /* NotificationManager.swift */; };
+		77E660F6281AD4BB004F3B80 /* WishlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E660F5281AD4BB004F3B80 /* WishlistView.swift */; };
+		77E8E4AB2820C5B0006226B6 /* UtilViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E8E4AA2820C5B0006226B6 /* UtilViews.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		77A9545027C1A20700A8F26A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		7732E64E27B88DC00044C181 /* IconSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconSwitch.swift; sourceTree = "<group>"; };
+		77A9544527C1A20500A8F26A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		77C1FDAA27ADBBF00081AFE6 /* PaymentTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaymentTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77C1FDAD27ADBBF00081AFE6 /* PaymentTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTrackerApp.swift; sourceTree = "<group>"; };
 		77C1FDAF27ADBBF00081AFE6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -43,6 +57,8 @@
 		77C1FDD727B37DBE0081AFE6 /* CommonEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonEnums.swift; sourceTree = "<group>"; };
 		77C1FDD927B464430081AFE6 /* EditForms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditForms.swift; sourceTree = "<group>"; };
 		77C1FDDB27B4B6C00081AFE6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		77E660F5281AD4BB004F3B80 /* WishlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistView.swift; sourceTree = "<group>"; };
+		77E8E4AA2820C5B0006226B6 /* UtilViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,10 +72,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		77A9544227C1A20500A8F26A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				77A9544527C1A20500A8F26A /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		77C1FDA127ADBBF00081AFE6 = {
 			isa = PBXGroup;
 			children = (
 				77C1FDAC27ADBBF00081AFE6 /* PaymentTracker */,
+				77A9544227C1A20500A8F26A /* Frameworks */,
 				77C1FDAB27ADBBF00081AFE6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,6 +116,7 @@
 				77C1FDBC27AE1D950081AFE6 /* UpcomingView.swift */,
 				77C1FDC127AE1FEF0081AFE6 /* DebtsView.swift */,
 				77C1FDC327AE20980081AFE6 /* SettingsView.swift */,
+				77E660F5281AD4BB004F3B80 /* WishlistView.swift */,
 			);
 			path = tabs;
 			sourceTree = "<group>";
@@ -102,7 +128,6 @@
 				77C1FDD527B37D660081AFE6 /* CommonFunctions.swift */,
 				77C1FDD727B37DBE0081AFE6 /* CommonEnums.swift */,
 				77C1FDDB27B4B6C00081AFE6 /* NotificationManager.swift */,
-				7732E64E27B88DC00044C181 /* IconSwitch.swift */,
 			);
 			path = utility;
 			sourceTree = "<group>";
@@ -115,6 +140,7 @@
 				77C1FDD327B370C90081AFE6 /* ContextMenus.swift */,
 				77C1FDCD27B0B46F0081AFE6 /* EntryForms.swift */,
 				77C1FDD927B464430081AFE6 /* EditForms.swift */,
+				77E8E4AA2820C5B0006226B6 /* UtilViews.swift */,
 			);
 			path = structure;
 			sourceTree = "<group>";
@@ -129,12 +155,15 @@
 				77C1FDA627ADBBF00081AFE6 /* Sources */,
 				77C1FDA727ADBBF00081AFE6 /* Frameworks */,
 				77C1FDA827ADBBF00081AFE6 /* Resources */,
+				77A9545027C1A20700A8F26A /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = PaymentTracker;
+			packageProductDependencies = (
+			);
 			productName = PaymentTracker;
 			productReference = 77C1FDAA27ADBBF00081AFE6 /* PaymentTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -163,6 +192,8 @@
 				Base,
 			);
 			mainGroup = 77C1FDA127ADBBF00081AFE6;
+			packageReferences = (
+			);
 			productRefGroup = 77C1FDAB27ADBBF00081AFE6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -190,6 +221,7 @@
 			files = (
 				77C1FDCC27B087560081AFE6 /* PaymentStore.swift in Sources */,
 				77C1FDB027ADBBF00081AFE6 /* ContentView.swift in Sources */,
+				77E8E4AB2820C5B0006226B6 /* UtilViews.swift in Sources */,
 				77C1FDDA27B464430081AFE6 /* EditForms.swift in Sources */,
 				77C1FDBF27AE1E4C0081AFE6 /* PaymentViews.swift in Sources */,
 				77C1FDDC27B4B6C00081AFE6 /* NotificationManager.swift in Sources */,
@@ -199,10 +231,10 @@
 				77C1FDC627AF2AA60081AFE6 /* PlusButton.swift in Sources */,
 				77C1FDD827B37DBE0081AFE6 /* CommonEnums.swift in Sources */,
 				77C1FDC227AE1FEF0081AFE6 /* DebtsView.swift in Sources */,
-				7732E64F27B88DC00044C181 /* IconSwitch.swift in Sources */,
 				77C1FDD427B370C90081AFE6 /* ContextMenus.swift in Sources */,
 				77C1FDCE27B0B46F0081AFE6 /* EntryForms.swift in Sources */,
 				77C1FDAE27ADBBF00081AFE6 /* PaymentTrackerApp.swift in Sources */,
+				77E660F6281AD4BB004F3B80 /* WishlistView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,12 +360,13 @@
 		77C1FDB927ADBBF20081AFE6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "Periwinkle Eyebite Subdued Royalty Light Turquoise Melons Midnight";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "Periwinkle Eyebite Subdued Royalty Turquoise Melons Midnight Cotton_Candy Neumorphic Pastel";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = ZA2T5F5XAA;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
@@ -347,11 +380,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.greavette.PaymentTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -363,12 +397,13 @@
 		77C1FDBA27ADBBF20081AFE6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "Periwinkle Eyebite Subdued Royalty Light Turquoise Melons Midnight";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "Periwinkle Eyebite Subdued Royalty Turquoise Melons Midnight Cotton_Candy Neumorphic Pastel";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 38;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = ZA2T5F5XAA;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
@@ -382,11 +417,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.greavette.PaymentTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

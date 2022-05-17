@@ -13,18 +13,20 @@ struct SettingsView: View {
     @AppStorage("darkMode") var darkMode: Bool = UserDefaults.standard.bool(forKey: "darkMode");
     @AppStorage("showSymbols") var showSymbols: Bool = UserDefaults.standard.bool(forKey: "showSymbols");
     @AppStorage("showCC") var showCC: Bool = UserDefaults.standard.bool(forKey: "showCC");
+    
+    // Currently in beta
+    @AppStorage("showWishlist") var showWishlist: Bool = UserDefaults.standard.bool(forKey: "showWishlist");
+    @AppStorage("showBreakdown") var showBreakdown: Bool = UserDefaults.standard.bool(forKey: "showBreakdown");
 
     @State private var selectedCurrency: Currency = Currency(rawValue: UserDefaults.standard.string(forKey: "currency") ?? "CAD") ?? .CAD
     @State private var notifications: Bool = UserDefaults.standard.bool(forKey: "notifications");
     @State private var startPage: StartPage = StartPage(rawValue: UserDefaults.standard.string(forKey: "startPage") ?? "upcoming") ?? .upcoming
     
     private var caught = UserDefaults.standard.bool(forKey: "notifications") ? true : false
-    private var build: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "[??]"
     
     @State private var showSwitcher: Bool = false;
     @State private var iconIndex: Int = GlobalProps.AppIcons.firstIndex{ ((UIApplication.shared.alternateIconName != nil) ? UIApplication.shared.alternateIconName! : Bundle.main.name!).starts(with: $0 ) } ?? 0
 
-        
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
@@ -45,11 +47,12 @@ struct SettingsView: View {
                     }
                 }
                 List {
-                    Section(header: Text("UI"), footer: Text("Notifications are always delivered at 12:01 AM UTC.")) {
+                    Section(header: Text("UI"), footer: Text("Notifications are always delivered at 1 am local time.")) {
                         HStack {
                             Text("Default Page")
                                 .multilineTextAlignment(.leading)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                             Spacer()
                             Picker(selection: $startPage, label: Text("Select your default page"), content: {
                                 ForEach(StartPage.allCases, id: \.self) {
@@ -60,11 +63,19 @@ struct SettingsView: View {
                             })
                                 .pickerStyle(MenuPickerStyle())
                                 .labelsHidden()
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                                 .multilineTextAlignment(.leading)
                         }
+                        Toggle(isOn: $showWishlist) {
+                            Text("Show Wishlist")
+                            BetaBadge()
+                        }
+                            .padding(.horizontal)
+                            .padding(.vertical, GlobalProps.PS)
                         Toggle("Dark Mode", isOn: $darkMode)
-                            .padding()
+                            .padding(.horizontal)
+                            .padding(.vertical, GlobalProps.PS)
                         Toggle("Notifications", isOn: $notifications)
                             .onChange(of: notifications, perform: { _ in
                                 if(caught) {
@@ -80,84 +91,94 @@ struct SettingsView: View {
                                     };
                                 }
                             })
-                            .padding()
+                            .padding(.horizontal)
+                            .padding(.vertical, GlobalProps.PS)
                     }
-                    Section(header: Text("Currency"), footer: pricePreview(showSymbols: $showSymbols, showCC: $showCC, selectedCurrency: $selectedCurrency)) {
+                    Section(header: Text("Currency"), footer: pricePreview(showSymbols: $showSymbols, showCC: $showCC, selectedCurrency: $selectedCurrency, showDB: $showBreakdown)) {
                         
                         //Weird work around for the label attribute not showing.
                         HStack {
                             Text("Default Currency")
                                 .multilineTextAlignment(.leading)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                             Spacer()
                             Picker(selection: $selectedCurrency, label: Text("Select your default currency"), content: {
                                 ForEach(Currency.allCases, id: \.self) {
-                                    Text($0.rawValue.uppercased())
+                                    Text($0.symbol + " " + $0.rawValue.uppercased())
                                 }
                             }).onChange(of: selectedCurrency, perform: { c in
                                 UserDefaults.standard.set(c.rawValue, forKey: "currency")
                             })
                                 .pickerStyle(MenuPickerStyle())
                                 .labelsHidden()
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                                 .multilineTextAlignment(.leading)
                         }
                         
                         //These labels work though...
                         Toggle("Show Symbols", isOn: $showSymbols)
-                            .padding()
+                            .padding(.horizontal)
+                            .padding(.vertical, GlobalProps.PS)
                         Toggle("Show CCs", isOn: $showCC)
-                            .padding()
+                            .padding(.horizontal)
+                            .padding(.vertical, GlobalProps.PS)
+                        Toggle(isOn: $showBreakdown) {
+                            Text("Show Breakdown")
+                            BetaBadge()
+                        }
+                            .padding(.horizontal)
+                            .padding(.vertical, GlobalProps.PS)
                     }
                     Section(header: Text("App Info"), footer: Text("Created by Axel Greavette")) {
-                        Link("Report a bug", destination: URL(string: "https://github.com/axelgrvt/payment-tracker/issues/new?labels=bug")!)
-                            .padding()
-                        Link("Suggest a feature", destination: URL(string: "https://github.com/axelgrvt/payment-tracker/issues/new?labels=feature")!)
-                            .padding()
+                        HStack {
+                            Link("Report a bug", destination: URL(string: "https://github.com/axelgrvt/payment-tracker/issues/new?labels=bug")!)
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
+                            Spacer()
+                            Image(systemName: "arrow.up.forward.app")
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
+                                .font(.body)
+                        }
+                        HStack {
+                            Link("Suggest a feature", destination: URL(string: "https://github.com/axelgrvt/payment-tracker/issues/new?labels=feature")!)
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
+                            Spacer()
+                            Image(systemName: "arrow.up.forward.app")
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
+                                .font(.body)
+                        }
                         HStack {
                             Text("Version")
                                 .multilineTextAlignment(.leading)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                             Spacer()
-                            Text(build)
+                            Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "[??]")
                                 .multilineTextAlignment(.trailing)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                         }
                         HStack {
                             Text("Last Updated")
                                 .multilineTextAlignment(.leading)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                             Spacer()
-                            Text("Thurs., Feb 17th")
+                            Text(Bundle.main.infoDictionary?["LastUpdated"] as? String ?? "[??]")
                                 .multilineTextAlignment(.trailing)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                         }
                     }
                 }.listStyle(.insetGrouped)
             }
         }.sheet(isPresented: $showSwitcher, content: {
-            IconSwitch()
+            IconSwitch(index: $iconIndex)
         })
-    }
-}
-
-
-struct pricePreview: View {
-    @Binding var showSymbols: Bool
-    @Binding var showCC: Bool
-    @Binding var selectedCurrency: Currency
-    
-    var body: some View {
-        VStack {
-            if(showSymbols && showCC) {
-                Text(try! AttributedString(markdown: "Prices will be shown with currency symbols and codes. For example: **" + selectedCurrency.symbol + "100 " + selectedCurrency.rawValue.uppercased() + "**"))
-            } else if (showSymbols && !showCC) {
-                Text(try! AttributedString(markdown: "Prices will be shown with currency symbols. For example: **" + selectedCurrency.symbol + "100**"))
-            } else if (showCC && !showSymbols){
-                Text(try! AttributedString(markdown: "Prices will be shown with currency codes. For example: **100 " + selectedCurrency.rawValue.uppercased() + "**"))
-            } else {
-                Text("Prices will be shown without currency codes or symbols. For example: **100**")
-            }
-        }
     }
 }

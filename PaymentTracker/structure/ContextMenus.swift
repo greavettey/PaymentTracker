@@ -23,6 +23,24 @@ struct ContextMenuDeleteDebt: View {
     }
 }
 
+struct ContextMenuDeleteWish: View {
+    @Binding var wishes: [WishlistEntry]
+    
+    @State var showSheet: Bool = false;
+    
+    var toDelete: WishlistEntry
+    
+    var body: some View {
+        Button {
+            wishes = wishes.filter() { $0.id != toDelete.id }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [toDelete.id.uuidString])
+        } label: {
+            Text("Delete")
+                .foregroundColor(.red)
+        }
+    }
+}
+
 struct ContextMenuDeleteUpcoming: View {
     @Binding var upcomings: [UpcomingPaymentEntry]
 

@@ -17,6 +17,7 @@ struct UpcomingEditForm: View {
     @State var date: Date;
     @State var cost: String
     @State var type: String;
+    @State var sub: Bool;
     
     @State var cc: Currency;
     @State var id: UUID
@@ -44,31 +45,30 @@ struct UpcomingEditForm: View {
                         VStack {
                             HStack {
                                 Text("Title")
-                                    .padding()
                                     .multilineTextAlignment(.leading)
-                                TextField("", text: $name)
-                                    .padding()
+                                TextField("10 Oil Barrels", text: $name)
                                     .multilineTextAlignment(.trailing)
                             }
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                             Divider()
-                                .padding(.vertical, -4.0)
                             HStack {
                                 DatePicker( "Due", selection: $date, in: Date.tomorrow.dayAfter..., displayedComponents: [.date])
-                                    .padding()
+                                    .padding(.horizontal)
+                                    .padding(.vertical, GlobalProps.PS)
                             }
                             Divider()
-                                .padding(.vertical, -4.0)
                             HStack {
                                 Text("Cost")
-                                    .padding()
                                     .multilineTextAlignment(.leading)
-                                TextField("", text: $cost)
-                                    .padding()
+                                    .padding(.horizontal)
+                                    .padding(.vertical, GlobalProps.PS)
+                                TextField("100", text: $cost)
+                                    .padding(.vertical, GlobalProps.PS)
                                     .multilineTextAlignment(.trailing)
                                     .keyboardType(.numberPad)
                                     .onReceive(Just(cost)) { newValue in
                                         self.cost = checkInput(original: newValue)
-
                                     }
                                 Picker(selection: $cc, label: Text("Choose the payment currency"), content: {
                                     ForEach(Currency.allCases, id: \.self) {
@@ -79,25 +79,36 @@ struct UpcomingEditForm: View {
                                 })
                                     .pickerStyle(MenuPickerStyle())
                                     .labelsHidden()
-                                    .padding()
+                                    .padding(.trailing)
+                                    .padding(.vertical, GlobalProps.PS)
                                     .multilineTextAlignment(.leading)
                                     
                             }
                             Divider()
+                            HStack {
+                                Text("Subscription")
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.vertical, GlobalProps.PS)
+                                Spacer()
+                                CheckBoxView(checked: $sub)
+                                    .padding(.vertical, GlobalProps.PS)
+                            }
                                 .padding(.horizontal)
+                            Divider()
                             HStack {
                                 Text("Vendor")
-                                    .padding()
                                     .multilineTextAlignment(.leading)
-                                TextField("", text: $type)
-                                    .padding()
+                                    .padding(.leading)
+                                TextField("ACME Co.", text: $type)
                                     .multilineTextAlignment(.trailing)
+                                    .padding(.trailing)
                             }
+                                .padding(.vertical, GlobalProps.PS)
                         }
                     }
                     Button {
                         let orig = upcomings.firstIndex{ $0.id == id }!
-                        let new = UpcomingPaymentEntry(name: name, date: date2String(d: date), cost: Double(cost)!, type: type, cc: cc.rawValue)
+                        let new = UpcomingPaymentEntry(name: name, date: date2String(d: date), cost: Double(cost)!, type: type, sub: sub, cc: cc.rawValue)
                         
                         upcomings[orig] = new;
                         
@@ -114,7 +125,8 @@ struct UpcomingEditForm: View {
                                 .font(.title3)
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(Color.blue)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                             Spacer()
                         }
                     }.disabled(name.isEmpty || date.description.isEmpty || cost.isEmpty || type.isEmpty)
@@ -160,26 +172,26 @@ struct DebtEditForm: View {
                         VStack {
                             HStack {
                                 Text("Owed to")
-                                    .padding()
                                     .multilineTextAlignment(.leading)
-                                TextField("", text: $name)
-                                    .padding()
+                                TextField("Stephen Strange", text: $name)
                                     .multilineTextAlignment(.trailing)
                             }
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                             Divider()
-                                .padding(.vertical, -4.0)
                             HStack {
-                                DatePicker( "Due", selection: $date, in: Date.tomorrow.dayAfter..., displayedComponents: [.date])
-                                    .padding()
+                                DatePicker("Due", selection: $date, in: Date.tomorrow.dayAfter..., displayedComponents: [.date])
+                                    .padding(.horizontal)
+                                    .padding(.vertical, GlobalProps.PS)
                             }
                             Divider()
-                                .padding(.vertical, -4.0)
                             HStack {
                                 Text("Amount")
-                                    .padding()
+                                    .padding(.horizontal)
+                                    .padding(.vertical, GlobalProps.PS)
                                     .multilineTextAlignment(.leading)
-                                TextField("", text: $amount)
-                                    .padding()
+                                TextField("50", text: $amount)
+                                    .padding(.vertical, GlobalProps.PS)
                                     .multilineTextAlignment(.trailing)
                                     .keyboardType(.numberPad)
                                     .onReceive(Just(amount)) { newValue in
@@ -194,25 +206,27 @@ struct DebtEditForm: View {
                                 })
                                     .pickerStyle(MenuPickerStyle())
                                     .labelsHidden()
-                                    .padding()
+                                    .padding(.trailing)
+                                    .padding(.vertical, GlobalProps.PS)
                                     .multilineTextAlignment(.leading)
                                     
                             }
                             Divider()
-                                .padding(.horizontal)
                             HStack {
                                 Text("Paid")
-                                    .padding()
+                                    .padding(.horizontal)
+                                    .padding(.vertical, GlobalProps.PS)
                                     .multilineTextAlignment(.leading)
-                                TextField("", text: $paid)
-                                    .padding()
+                                TextField("21", text: $paid)
+                                    .padding(.vertical, GlobalProps.PS)
                                     .multilineTextAlignment(.trailing)
                                     .keyboardType(.numberPad)
                                     .onReceive(Just(paid)) { newValue in
                                         self.paid = checkInput(original: newValue)
                                     }
                                 Text(cc.rawValue.uppercased())
-                                    .padding()
+                                    .padding(.trailing)
+                                    .padding(.vertical, GlobalProps.PS)
                                     .multilineTextAlignment(.trailing)
                             }
                         }
@@ -234,10 +248,128 @@ struct DebtEditForm: View {
                                 .font(.title3)
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(Color.blue)
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                             Spacer()
                         }
                     }.disabled(name.isEmpty || date.description.isEmpty || amount.isEmpty || paid.isEmpty)
+                }
+            }
+        }
+    }
+}
+
+
+struct WishlistEditForm: View {
+    @Environment(\.dismiss) var dismiss
+    
+    @Binding var wishes: [WishlistEntry]
+        
+    @State var name: String;
+    @State var link: String;
+    @State var cost: String
+    @State var type: String;
+    
+    @State var cc: Currency;
+    @State var id: UUID
+
+    var body: some View {
+        ZStack(alignment: .top) {
+            VStack {
+                HStack{
+                    Text("Edit Entry")
+                        .font(.title)
+                        .multilineTextAlignment(.leading)
+                        .padding()
+                    Spacer()
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "x.square.fill")
+                            .padding()
+                            .font(.title)
+                    }
+                }
+                Spacer()
+                Form {
+                    Section {
+                        VStack {
+                            HStack {
+                                Text("Title")
+                                    .multilineTextAlignment(.leading)
+                                TextField("Moai Statue", text: $name)
+                                    .multilineTextAlignment(.trailing)
+                            }
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
+                            Divider()
+                            HStack {
+                                Text("Cost")
+                                    .padding(.horizontal)
+                                    .padding(.vertical, GlobalProps.PS)
+                                    .multilineTextAlignment(.leading)
+                                TextField("10000", text: $cost)
+                                    .padding(.vertical, GlobalProps.PS)
+                                    .multilineTextAlignment(.trailing)
+                                    .keyboardType(.numberPad)
+                                    .onReceive(Just(cost)) { newValue in
+                                        self.cost = checkInput(original: newValue)
+
+                                    }
+                                Picker(selection: $cc, label: Text("Choose the payment currency"), content: {
+                                    ForEach(Currency.allCases, id: \.self) {
+                                        Text($0.rawValue.uppercased())
+                                            .multilineTextAlignment(.trailing)
+                                    }
+                                })
+                                    .pickerStyle(MenuPickerStyle())
+                                    .labelsHidden()
+                                    .padding(.trailing)
+                                    .padding(.vertical, GlobalProps.PS)
+                                    .multilineTextAlignment(.leading)
+                                    
+                            }
+                            Divider()
+                            HStack {
+                                Text("Vendor")
+                                    .multilineTextAlignment(.leading)
+                                TextField("Chile", text: $type)
+                                    .multilineTextAlignment(.trailing)
+                            }
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
+                            Divider()
+                            HStack {
+                                Text("Link")
+                                    .multilineTextAlignment(.leading)
+                                TextField("https://bitly.com/98K8eH", text: $link)
+                                    .multilineTextAlignment(.trailing)
+                            }
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
+                        }
+                    }
+                    Button {
+                        let orig = wishes.firstIndex{ $0.id == id }!
+                        let new = WishlistEntry(name: name, cost: Double(cost)!, type: type, cc: cc.rawValue, link: link)
+                        
+                        wishes[orig] = new;
+                                        
+                        dismiss()
+                        
+                        
+                    } label: {
+                        HStack {
+                            Spacer()
+                            Text("Save")
+                                .font(.title3)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Color.blue)
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
+                            Spacer()
+                        }
+                    }.disabled(name.isEmpty || link.isEmpty || cost.isEmpty || type.isEmpty)
                 }
             }
         }

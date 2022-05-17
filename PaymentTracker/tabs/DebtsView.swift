@@ -10,7 +10,8 @@ import SwiftUI
 struct DebtsView: View {
     @Binding var debts: [DebtPaymentEntry]
     @Binding var upcomings: [UpcomingPaymentEntry]
-    
+    @Binding var wishes: [WishlistEntry]
+
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
@@ -20,7 +21,7 @@ struct DebtsView: View {
                         .multilineTextAlignment(.leading)
                         .padding()
                     Spacer()
-                    PlusButton(debts: $debts, upcomings: $upcomings, parent: Binding.constant(1))
+                    PlusButton(debts: $debts, upcomings: $upcomings, wishes: $wishes, parent: Binding.constant(1))
                 }
                 if(debts.count == 0) {
                     Spacer()
@@ -33,7 +34,7 @@ struct DebtsView: View {
                 } else {
                     List(debts) { entry in
                         Section {
-                            DebtPaymentView(entry: entry, debts: $debts, upcomings: $upcomings);
+                            DebtPaymentView(entry: entry, debts: $debts);
                         }
                     }
                 }

@@ -13,13 +13,6 @@ func date2String(d: Date) -> String {
     return df.string(from: d)
 }
 
-func notifFormat(d: Date) -> Date {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "MM'/'dd'/'yyyy'T'HH':'mm':'ss"
-    let modified = date2String(d: d) + "T00:01:00"
-    return dateFormatter.date(from: modified)!
-}
-
 func string2Date(s: String) -> Date {
     let df = DateFormatter()
     df.dateFormat = "MM/dd/yyyy"
@@ -129,3 +122,4 @@ func checkPunctuation(showSymbols: Bool, showCurrency: Bool, globalDefault: Stri
         return value
     }
 }
+

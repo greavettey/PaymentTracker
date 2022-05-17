@@ -11,6 +11,7 @@ import Combine
 struct PlusButton: View {
     @Binding var debts: [DebtPaymentEntry]
     @Binding var upcomings: [UpcomingPaymentEntry]
+    @Binding var wishes: [WishlistEntry]
     @Binding var parent: Int
     
     @State private var showSheet = false
@@ -24,7 +25,7 @@ struct PlusButton: View {
                 .font(.title)
         }
         .sheet(isPresented: $showSheet) {
-            EntrySheet(debts: $debts, upcomings: $upcomings, parent: parent)
+            EntrySheet(debts: $debts, upcomings: $upcomings, wishes: $wishes, parent: parent)
         }
     }
 }
@@ -34,9 +35,10 @@ struct EntrySheet: View {
 
     @Binding var debts: [DebtPaymentEntry]
     @Binding var upcomings: [UpcomingPaymentEntry]
+    @Binding var wishes: [WishlistEntry]
     @State var parent: Int
         
-    let typeOptions = ["Upcoming", "Debt"]
+    let typeOptions = ["Upcoming", "Debt", "Wishlist"]
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -60,25 +62,30 @@ struct EntrySheet: View {
                     Section {
                         HStack {
                             Text("Type")
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                                 .multilineTextAlignment(.leading)
                             Spacer()
                             Picker(selection: $parent, label: Text("Choose the type of payment"), content: {
                                 ForEach(0 ..< typeOptions.count) {
                                     Text(typeOptions[$0])
-                                        .padding()
+                                        .padding(.horizontal)
+                                        .padding(.vertical, GlobalProps.PS)
                                         .multilineTextAlignment(.trailing)
                                 }
                             })
                                 .pickerStyle(MenuPickerStyle())
                                 .labelsHidden()
-                                .padding()
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
                                 .multilineTextAlignment(.leading)
                         }
                     }
                     switch parent {
                     case 1:
                         DebtEntryForm(debts: $debts).tag(1)
+                    case 2:
+                        WishlistEntryForm(wishes: $wishes).tag(2)
                     default:
                         UpcomingEntryForm(upcomings: $upcomings).tag(0)
                     }
