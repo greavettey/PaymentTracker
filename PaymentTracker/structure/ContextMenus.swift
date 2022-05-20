@@ -11,7 +11,7 @@ import Combine
 struct ContextMenuDeleteDebt: View {
     @Binding var debts: [DebtPaymentEntry]
 
-    var toDelete: DebtPaymentEntry
+    var toDelete: DebtPaymentEntry;
     
     var body: some View {
         Button {

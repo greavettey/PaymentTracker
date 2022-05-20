@@ -46,13 +46,19 @@ struct UpcomingView: View {
                                         .cornerRadius(3)
                                 }
                         }, footer: HStack {
-                            entry.sub ?? false ? Text("Reoccuring payment") : Text("One-time payment")
+                            switch(entry.sub) {
+                                case 1:
+                                    Text("Monthly payment")
+                                case 2:
+                                    Text("Yearly payment")
+                                default:
+                                    Text("One-time payment")
+                            }
                             Spacer()
-                            Image(systemName: entry.sub ?? false ? "clock.arrow.2.circlepath" : "clock.arrow.circlepath")
+                            Image(systemName: (entry.sub != 0 && entry.sub == 2) ? "clock.arrow.2.circlepath" : "clock.arrow.circlepath")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 15, height: 15)
-                            
                         }) {
                             UpcomingPaymentView(entry: entry, upcomings: $upcomings);
                         }

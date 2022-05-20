@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		773BB706283716F300C17AD6 /* Upcoming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773BB705283716F300C17AD6 /* Upcoming.swift */; };
+		773BB70A2837176200C17AD6 /* Wishlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773BB7092837176200C17AD6 /* Wishlist.swift */; };
+		773BB70C2837178500C17AD6 /* Debt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773BB70B2837178500C17AD6 /* Debt.swift */; };
 		77C1FDAE27ADBBF00081AFE6 /* PaymentTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDAD27ADBBF00081AFE6 /* PaymentTrackerApp.swift */; };
 		77C1FDB027ADBBF00081AFE6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDAF27ADBBF00081AFE6 /* ContentView.swift */; };
 		77C1FDB227ADBBF20081AFE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77C1FDB127ADBBF20081AFE6 /* Assets.xcassets */; };
 		77C1FDBD27AE1D950081AFE6 /* UpcomingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDBC27AE1D950081AFE6 /* UpcomingView.swift */; };
-		77C1FDBF27AE1E4C0081AFE6 /* PaymentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDBE27AE1E4C0081AFE6 /* PaymentViews.swift */; };
 		77C1FDC227AE1FEF0081AFE6 /* DebtsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDC127AE1FEF0081AFE6 /* DebtsView.swift */; };
 		77C1FDC427AE20980081AFE6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDC327AE20980081AFE6 /* SettingsView.swift */; };
 		77C1FDC627AF2AA60081AFE6 /* PlusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDC527AF2AA60081AFE6 /* PlusButton.swift */; };
 		77C1FDCC27B087560081AFE6 /* PaymentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDCB27B087560081AFE6 /* PaymentStore.swift */; };
-		77C1FDCE27B0B46F0081AFE6 /* EntryForms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDCD27B0B46F0081AFE6 /* EntryForms.swift */; };
 		77C1FDD427B370C90081AFE6 /* ContextMenus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDD327B370C90081AFE6 /* ContextMenus.swift */; };
 		77C1FDD627B37D660081AFE6 /* CommonFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDD527B37D660081AFE6 /* CommonFunctions.swift */; };
 		77C1FDD827B37DBE0081AFE6 /* CommonEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDD727B37DBE0081AFE6 /* CommonEnums.swift */; };
-		77C1FDDA27B464430081AFE6 /* EditForms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDD927B464430081AFE6 /* EditForms.swift */; };
 		77C1FDDC27B4B6C00081AFE6 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C1FDDB27B4B6C00081AFE6 /* NotificationManager.swift */; };
 		77E660F6281AD4BB004F3B80 /* WishlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E660F5281AD4BB004F3B80 /* WishlistView.swift */; };
 		77E8E4AB2820C5B0006226B6 /* UtilViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E8E4AA2820C5B0006226B6 /* UtilViews.swift */; };
@@ -40,22 +40,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		773BB705283716F300C17AD6 /* Upcoming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upcoming.swift; sourceTree = "<group>"; };
+		773BB7092837176200C17AD6 /* Wishlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wishlist.swift; sourceTree = "<group>"; };
+		773BB70B2837178500C17AD6 /* Debt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debt.swift; sourceTree = "<group>"; };
 		77A9544527C1A20500A8F26A /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		77C1FDAA27ADBBF00081AFE6 /* PaymentTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaymentTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77C1FDAD27ADBBF00081AFE6 /* PaymentTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTrackerApp.swift; sourceTree = "<group>"; };
 		77C1FDAF27ADBBF00081AFE6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		77C1FDB127ADBBF20081AFE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		77C1FDBC27AE1D950081AFE6 /* UpcomingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingView.swift; sourceTree = "<group>"; };
-		77C1FDBE27AE1E4C0081AFE6 /* PaymentViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViews.swift; sourceTree = "<group>"; };
 		77C1FDC127AE1FEF0081AFE6 /* DebtsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtsView.swift; sourceTree = "<group>"; };
 		77C1FDC327AE20980081AFE6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		77C1FDC527AF2AA60081AFE6 /* PlusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusButton.swift; sourceTree = "<group>"; };
 		77C1FDCB27B087560081AFE6 /* PaymentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentStore.swift; sourceTree = "<group>"; };
-		77C1FDCD27B0B46F0081AFE6 /* EntryForms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryForms.swift; sourceTree = "<group>"; };
 		77C1FDD327B370C90081AFE6 /* ContextMenus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenus.swift; sourceTree = "<group>"; };
 		77C1FDD527B37D660081AFE6 /* CommonFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonFunctions.swift; sourceTree = "<group>"; };
 		77C1FDD727B37DBE0081AFE6 /* CommonEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonEnums.swift; sourceTree = "<group>"; };
-		77C1FDD927B464430081AFE6 /* EditForms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditForms.swift; sourceTree = "<group>"; };
 		77C1FDDB27B4B6C00081AFE6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		77E660F5281AD4BB004F3B80 /* WishlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishlistView.swift; sourceTree = "<group>"; };
 		77E8E4AA2820C5B0006226B6 /* UtilViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilViews.swift; sourceTree = "<group>"; };
@@ -72,6 +72,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		773BB704283716D200C17AD6 /* payments */ = {
+			isa = PBXGroup;
+			children = (
+				773BB705283716F300C17AD6 /* Upcoming.swift */,
+				773BB7092837176200C17AD6 /* Wishlist.swift */,
+				773BB70B2837178500C17AD6 /* Debt.swift */,
+			);
+			path = payments;
+			sourceTree = "<group>";
+		};
 		77A9544227C1A20500A8F26A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,11 +145,9 @@
 		77C1FDCF27B0C0CC0081AFE6 /* structure */ = {
 			isa = PBXGroup;
 			children = (
-				77C1FDBE27AE1E4C0081AFE6 /* PaymentViews.swift */,
+				773BB704283716D200C17AD6 /* payments */,
 				77C1FDC527AF2AA60081AFE6 /* PlusButton.swift */,
 				77C1FDD327B370C90081AFE6 /* ContextMenus.swift */,
-				77C1FDCD27B0B46F0081AFE6 /* EntryForms.swift */,
-				77C1FDD927B464430081AFE6 /* EditForms.swift */,
 				77E8E4AA2820C5B0006226B6 /* UtilViews.swift */,
 			);
 			path = structure;
@@ -175,7 +183,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					77C1FDA927ADBBF00081AFE6 = {
@@ -222,8 +230,6 @@
 				77C1FDCC27B087560081AFE6 /* PaymentStore.swift in Sources */,
 				77C1FDB027ADBBF00081AFE6 /* ContentView.swift in Sources */,
 				77E8E4AB2820C5B0006226B6 /* UtilViews.swift in Sources */,
-				77C1FDDA27B464430081AFE6 /* EditForms.swift in Sources */,
-				77C1FDBF27AE1E4C0081AFE6 /* PaymentViews.swift in Sources */,
 				77C1FDDC27B4B6C00081AFE6 /* NotificationManager.swift in Sources */,
 				77C1FDD627B37D660081AFE6 /* CommonFunctions.swift in Sources */,
 				77C1FDBD27AE1D950081AFE6 /* UpcomingView.swift in Sources */,
@@ -232,9 +238,11 @@
 				77C1FDD827B37DBE0081AFE6 /* CommonEnums.swift in Sources */,
 				77C1FDC227AE1FEF0081AFE6 /* DebtsView.swift in Sources */,
 				77C1FDD427B370C90081AFE6 /* ContextMenus.swift in Sources */,
-				77C1FDCE27B0B46F0081AFE6 /* EntryForms.swift in Sources */,
+				773BB706283716F300C17AD6 /* Upcoming.swift in Sources */,
 				77C1FDAE27ADBBF00081AFE6 /* PaymentTrackerApp.swift in Sources */,
+				773BB70A2837176200C17AD6 /* Wishlist.swift in Sources */,
 				77E660F6281AD4BB004F3B80 /* WishlistView.swift in Sources */,
+				773BB70C2837178500C17AD6 /* Debt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +284,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = ZA2T5F5XAA;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -292,7 +301,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -337,6 +346,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = ZA2T5F5XAA;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -347,7 +357,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -366,7 +376,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = ZA2T5F5XAA;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
@@ -380,7 +390,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -403,7 +413,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = ZA2T5F5XAA;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
@@ -417,7 +427,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

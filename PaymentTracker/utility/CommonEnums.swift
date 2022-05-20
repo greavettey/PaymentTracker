@@ -12,7 +12,7 @@ struct UpcomingPaymentEntry: Identifiable, Codable, Hashable {
     let date: String;
     let cost: Double;
     let type: String;
-    let sub: Bool?;
+    let sub: Int?;
     
     let cc: String;
     
@@ -22,6 +22,8 @@ struct UpcomingPaymentEntry: Identifiable, Codable, Hashable {
 struct DebtPaymentEntry: Identifiable, Codable, Hashable {
     let name: String;
     let date: String;
+    let added: String?;
+    let edited: String?;
     var amount: Double;
     var paid: Double;
     
@@ -34,6 +36,8 @@ struct WishlistEntry: Identifiable, Codable, Hashable {
     let name: String;
     let cost: Double;
     let type: String;
+    let added: String?;
+    let edited: String?;
     
     let cc: String;
     let link: String;
@@ -61,7 +65,7 @@ enum Currency: String, CaseIterable, Identifiable, Codable {
 }
 
 enum StartPage: String, CaseIterable, Identifiable, Codable {
-    case upcoming, debts
+    case upcoming, debts, wishlist
 
     var id: String { self.rawValue }
 }
@@ -70,4 +74,6 @@ struct GlobalProps {
     static var SupportedIcons: [String] = ["PlayStation", "Kickstarter", "Amazon", "Steam", "Alibaba", "Walmart", "Indigo", "Indiegogo", "Best Buy", "Etsy", "Target", "ASOS", "Microsoft", "Adobe", "Apple", "Microsoft", "Xbox", "Wish"]
     static var AppIcons: [String] = ["AppIcon", "Royalty", "Periwinkle", "Eyebite", "Subdued", "Midnight", "Melons", "Turquoise", "Cotton_Candy", "Neumorphic", "Pastel"]
     static var PS: CGFloat = 6
+    static var SubOps: [String] = ["Single", "Monthly", "Yearly"]
+
 }

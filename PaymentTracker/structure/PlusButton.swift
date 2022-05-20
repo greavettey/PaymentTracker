@@ -31,7 +31,7 @@ struct PlusButton: View {
 }
 
 struct EntrySheet: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.presentationMode) var presentationMode
 
     @Binding var debts: [DebtPaymentEntry]
     @Binding var upcomings: [UpcomingPaymentEntry]
@@ -50,7 +50,7 @@ struct EntrySheet: View {
                         .padding()
                     Spacer()
                     Button {
-                        dismiss()
+                        self.presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "x.square.fill")
                             .padding()

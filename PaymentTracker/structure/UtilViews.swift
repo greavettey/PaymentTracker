@@ -31,7 +31,7 @@ struct pricePreview: View {
     var body: some View {
         let db: String = showDB ? "\n\nDebt breakdowns do not respect currency code choices." : "";
 
-        VStack {
+        if #available(iOS 15, *) {
             if(showSymbols && showCC) {
                 Text(try! AttributedString(markdown: "Prices will be shown with currency symbols and codes. For example: **" + selectedCurrency.symbol + "100 " + selectedCurrency.rawValue.uppercased() + "**" + db, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace)))
             } else if (showSymbols && !showCC) {
@@ -41,14 +41,26 @@ struct pricePreview: View {
             } else {
                 Text("Prices will be shown without currency codes or symbols. For example: **100**")
             }
+        } else {
+            if(showSymbols && showCC) {
+                Text("Prices will be shown with currency symbols and codes. For example: " + selectedCurrency.symbol + "100 " + selectedCurrency.rawValue.uppercased() + db)
+            } else if (showSymbols && !showCC) {
+                Text("Prices will be shown with currency symbols. For example: " + selectedCurrency.symbol + "100" + db)
+            } else if (showCC && !showSymbols){
+                Text("Prices will be shown with currency codes. For example: 100 " + selectedCurrency.rawValue.uppercased() + db)
+            } else {
+                Text("Prices will be shown without currency codes or symbols. For example: **100**")
+            }
         }
+            
     }
 }
 
 struct IconSwitch: View {
-    @Environment(\.dismiss) var dismiss
-    
+    @Environment(\.presentationMode) var presentationMode
+
     @Binding var index: Int
+    @State var t: [String]
                 
     var body: some View {
         ZStack(alignment: .top) {
@@ -60,7 +72,7 @@ struct IconSwitch: View {
                         .padding()
                     Spacer()
                     Button(action: {
-                        dismiss()
+                        self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Image(systemName: "x.square.fill")
                             .padding()
@@ -71,7 +83,6 @@ struct IconSwitch: View {
                     Section(footer: Text("Changes are applied instantly, but take a few minutes to show up in-app.")) {
                         Picker(selection: $index, label: Text("Choose an app icon"), content: {
                             ForEach(0 ..< GlobalProps.AppIcons.count) { c in
-                                let t = GlobalProps.AppIcons.sorted(by: <)
                                 HStack {
                                     Image(uiImage: UIImage(named: t[c]) ?? UIImage())
                                         .resizable()
@@ -80,18 +91,18 @@ struct IconSwitch: View {
                                         .cornerRadius(5)
                                         .padding(.horizontal)
                                         .padding(.vertical, GlobalProps.PS)
-                                    Text(t[c].replacingOccurrences(of: "AppIcon", with: "Default").replacingOccurrences(of: "_", with: " "))
+                                    Text(t[c].replacingOccurrences(of: "AppIcon", with: "Default Icon").replacingOccurrences(of: "_", with: " "))
                                         .padding(.vertical, GlobalProps.PS)
                                 }
                             }
                         }).onChange(of: index, perform: { c in
-                            UIApplication.shared.setAlternateIconName(index == 0 ? nil : GlobalProps.AppIcons[index], completionHandler: {
+                            UIApplication.shared.setAlternateIconName(index == 0 ? nil : GlobalProps.AppIcons[GlobalProps.AppIcons.firstIndex(of: t[index]) ?? 0], completionHandler: {
                                 error in
                                 if let error = error {
                                     print(error.localizedDescription)
-                                    dismiss()
+                                    self.presentationMode.wrappedValue.dismiss()
                                 } else {
-                                    dismiss()
+                                    self.presentationMode.wrappedValue.dismiss()
                                 }
                             })
                         })

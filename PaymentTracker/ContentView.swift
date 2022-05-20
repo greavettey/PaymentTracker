@@ -23,7 +23,11 @@ struct ContentView: View {
         TabView(selection: $tabSelection) {
             UpcomingView(upcomings: $upcomings, debts: $debts, wishes: $wishes)
                 .tabItem {
-                    Image(systemName: "clock.badge.exclamationmark.fill")
+                    if #available(iOS 15, *) {
+                        Image(systemName: "clock.badge.exclamationmark.fill")
+                    } else {
+                        Image(systemName: "clock.arrow.circlepath")
+                    }
                     Text("Upcoming")
                 }
                     .tag(1)

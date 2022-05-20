@@ -17,6 +17,7 @@ struct SettingsView: View {
     // Currently in beta
     @AppStorage("showWishlist") var showWishlist: Bool = UserDefaults.standard.bool(forKey: "showWishlist");
     @AppStorage("showBreakdown") var showBreakdown: Bool = UserDefaults.standard.bool(forKey: "showBreakdown");
+    @AppStorage("showAdded") var showAdded: Bool = UserDefaults.standard.bool(forKey: "showAdded");
 
     @State private var selectedCurrency: Currency = Currency(rawValue: UserDefaults.standard.string(forKey: "currency") ?? "CAD") ?? .CAD
     @State private var notifications: Bool = UserDefaults.standard.bool(forKey: "notifications");
@@ -26,6 +27,7 @@ struct SettingsView: View {
     
     @State private var showSwitcher: Bool = false;
     @State private var iconIndex: Int = GlobalProps.AppIcons.firstIndex{ ((UIApplication.shared.alternateIconName != nil) ? UIApplication.shared.alternateIconName! : Bundle.main.name!).starts(with: $0 ) } ?? 0
+    let t = GlobalProps.AppIcons.sorted(by: <);
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -39,7 +41,7 @@ struct SettingsView: View {
                     Button {
                         showSwitcher.toggle()
                     } label: {
-                        Image(uiImage: UIImage(named: GlobalProps.AppIcons[iconIndex]) ?? UIImage())
+                        Image(uiImage: UIImage(named: GlobalProps.AppIcons[GlobalProps.AppIcons.firstIndex(of: t[iconIndex]) ?? 0]) ?? UIImage())
                             .resizable()
                             .frame(width: 30, height: 30, alignment: .leading)
                             .cornerRadius(5)
@@ -69,6 +71,12 @@ struct SettingsView: View {
                         }
                         Toggle(isOn: $showWishlist) {
                             Text("Show Wishlist")
+                            BetaBadge()
+                        }
+                            .padding(.horizontal)
+                            .padding(.vertical, GlobalProps.PS)
+                        Toggle(isOn: $showAdded) {
+                            Text("Show Entry Dates")
                             BetaBadge()
                         }
                             .padding(.horizontal)
@@ -121,7 +129,7 @@ struct SettingsView: View {
                         Toggle("Show Symbols", isOn: $showSymbols)
                             .padding(.horizontal)
                             .padding(.vertical, GlobalProps.PS)
-                        Toggle("Show CCs", isOn: $showCC)
+                        Toggle("Show Codes", isOn: $showCC)
                             .padding(.horizontal)
                             .padding(.vertical, GlobalProps.PS)
                         Toggle(isOn: $showBreakdown) {
@@ -178,7 +186,7 @@ struct SettingsView: View {
                 }.listStyle(.insetGrouped)
             }
         }.sheet(isPresented: $showSwitcher, content: {
-            IconSwitch(index: $iconIndex)
+            IconSwitch(index: $iconIndex, t: t)
         })
     }
 }

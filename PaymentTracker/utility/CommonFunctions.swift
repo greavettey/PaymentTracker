@@ -65,9 +65,11 @@ func changeTab() -> Int {
     if(UserDefaults.standard.bool(forKey: "goToSettings")) {
         UserDefaults.standard.set(false, forKey: "goToSettings")
         UserDefaults.standard.synchronize()
-        return 3
+        return 4
     } else if(check == "debts") {
         return 2
+    } else if(check == "wishlist") {
+        return 3
     } else { return 1 }
 }
 
@@ -122,4 +124,3 @@ func checkPunctuation(showSymbols: Bool, showCurrency: Bool, globalDefault: Stri
         return value
     }
 }
-
