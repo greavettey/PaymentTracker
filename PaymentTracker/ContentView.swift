@@ -72,7 +72,7 @@ struct ContentView: View {
     private func handleSwipe(translation: CGFloat) {
         if translation > 50 && tabSelection > 0 {
             tabSelection -= 1
-        } else  if translation < -50 && tabSelection <= 3 {
+        } else if translation < -50 && tabSelection <= 3 {
             tabSelection += 1
         }
     }

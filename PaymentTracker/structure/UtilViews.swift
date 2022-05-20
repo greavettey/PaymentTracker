@@ -114,19 +114,3 @@ struct IconSwitch: View {
         }
     }
 }
-
-/*
- Thank you Jad Chaar on StackOverflow
- https://stackoverflow.com/questions/58425829/how-can-i-create-a-text-with-checkbox-in-swiftui
- */
-struct CheckBoxView: View {
-    @Binding var checked: Bool
-
-    var body: some View {
-        Image(systemName: checked ? "checkmark.square.fill" : "square")
-            .foregroundColor(checked ? Color(UIColor.systemBlue) : Color.secondary)
-            .onTapGesture {
-                self.checked.toggle()
-            }
-    }
-}
