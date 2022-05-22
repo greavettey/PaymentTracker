@@ -61,16 +61,14 @@ extension Date {
 }
 
 func changeTab() -> Int {
-    let check = UserDefaults.standard.string(forKey: "startPage");
+    let check = UserDefaults.standard.integer(forKey: "startPage");
     if(UserDefaults.standard.bool(forKey: "goToSettings")) {
         UserDefaults.standard.set(false, forKey: "goToSettings")
         UserDefaults.standard.synchronize()
         return 4
-    } else if(check == "debts") {
-        return 2
-    } else if(check == "wishlist") {
-        return 3
-    } else { return 1 }
+    } else {
+        return check + 1;
+    }
 }
 
 extension Bundle {

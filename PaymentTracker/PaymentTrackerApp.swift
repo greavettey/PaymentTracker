@@ -9,15 +9,16 @@ import SwiftUI
 
 @main
 struct PaymentTrackerApp: App {
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
     @AppStorage("darkMode") var mode: Bool = UserDefaults.standard.bool(forKey: "darkMode");
     
     @StateObject private var DebtStore = DebtPaymentStore();
     @StateObject private var UpcomingStore = UpcomingPaymentStore();
     @StateObject private var WishStore = WishlistStore();
-    
+        
     init() {
-        UserDefaults.standard.register(defaults: [ "showWishlist": true, "showBreakdown": true, "showSymbols": true, "showAdded": true, "darkMode": colorScheme == .dark ? true : false]);
+        // For testing UserDefaults.standard.set(true, forKey: "showPatchnotes")
+        UserDefaults.standard.register(defaults: [ "showWishlist": true, "showBreakdown": true, "showSymbols": true, "showAdded": true, "darkMode": colorScheme == .dark ? true : false, "showPatchnotes": ""]);
         
         if(!UserDefaults.standard.bool(forKey: "notifications") && !UserDefaults.standard.bool(forKey: "askedForNotificationsAtFirstStartup")) {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
@@ -30,6 +31,10 @@ struct PaymentTrackerApp: App {
                     return UserDefaults.standard.set(false, forKey: "notifications")
                 }
             };
+        }
+        
+        if(UserDefaults.standard.bool(forKey: "notifications") && !UserDefaults.standard.bool(forKey: "askedForNotificationsAtFirstStartup")) {
+                UserDefaults.standard.set(true, forKey: "askedForNotificationsAtFirstStartup")
         }
     }
         

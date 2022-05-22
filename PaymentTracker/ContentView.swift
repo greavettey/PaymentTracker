@@ -17,6 +17,8 @@ struct ContentView: View {
     
     @AppStorage("showWishlist") var showWishlist: Bool = UserDefaults.standard.bool(forKey: "showWishlist");
     
+    @State var showPatchnotes: Bool = UserDefaults.standard.string(forKey: "showPatchnotes") != Bundle.main.infoDictionary?["PassPhrase"] as? String ?? "salute emoji";
+    
     let saveAction: ()->Void
 
     var body: some View {
@@ -63,10 +65,13 @@ struct ContentView: View {
                     .highPriorityGesture(DragGesture().onEnded({
                         self.handleSwipe(translation: $0.translation.width)
                     }))
-        }
-            .onChange(of: scenePhase) { phase in
-                if(phase == .inactive) { saveAction() }
-            }
+        }.onChange(of: scenePhase) { phase in
+            if(phase == .inactive) { saveAction() }
+        }.sheet(isPresented: $showPatchnotes, onDismiss: {
+            UserDefaults.standard.set(Bundle.main.infoDictionary?["PassPhrase"] as? String ?? "salute emoji", forKey: "showPatchnotes")
+        }, content: {
+            PatchNotes()
+        })
     }
     
     private func handleSwipe(translation: CGFloat) {

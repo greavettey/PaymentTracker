@@ -9,7 +9,6 @@ import SwiftUI
 import Foundation
 
 struct SettingsView: View {
-    
     @AppStorage("darkMode") var darkMode: Bool = UserDefaults.standard.bool(forKey: "darkMode");
     @AppStorage("showSymbols") var showSymbols: Bool = UserDefaults.standard.bool(forKey: "showSymbols");
     @AppStorage("showCC") var showCC: Bool = UserDefaults.standard.bool(forKey: "showCC");
@@ -21,14 +20,17 @@ struct SettingsView: View {
 
     @State private var selectedCurrency: Currency = Currency(rawValue: UserDefaults.standard.string(forKey: "currency") ?? "CAD") ?? .CAD
     @State private var notifications: Bool = UserDefaults.standard.bool(forKey: "notifications");
-    @State private var startPage: StartPage = StartPage(rawValue: UserDefaults.standard.string(forKey: "startPage") ?? "upcoming") ?? .upcoming
+    
+    @State private var startPage: Int = UserDefaults.standard.integer(forKey: "startPage");
+    private var possibleStartPages: [String] = UserDefaults.standard.bool(forKey: "showWishlist") ? ["Upcoming", "Debts", "Wishlist"] : ["Upcoming", "Debts"];
     
     private var caught = UserDefaults.standard.bool(forKey: "notifications") ? true : false
     
     @State private var showSwitcher: Bool = false;
     @State private var iconIndex: Int = GlobalProps.AppIcons.firstIndex{ ((UIApplication.shared.alternateIconName != nil) ? UIApplication.shared.alternateIconName! : Bundle.main.name!).starts(with: $0 ) } ?? 0
-    let t = GlobalProps.AppIcons.sorted(by: <);
-
+    
+    @State private var showPatchnotes: Bool = false;
+    
     var body: some View {
         ZStack(alignment: .top) {
             VStack {
@@ -41,7 +43,7 @@ struct SettingsView: View {
                     Button {
                         showSwitcher.toggle()
                     } label: {
-                        Image(uiImage: UIImage(named: GlobalProps.AppIcons[GlobalProps.AppIcons.firstIndex(of: t[iconIndex]) ?? 0]) ?? UIImage())
+                        Image(uiImage: UIImage(named: GlobalProps.AppIcons[iconIndex]) ?? UIImage())
                             .resizable()
                             .frame(width: 30, height: 30, alignment: .leading)
                             .cornerRadius(5)
@@ -57,11 +59,12 @@ struct SettingsView: View {
                                 .padding(.vertical, GlobalProps.PS)
                             Spacer()
                             Picker(selection: $startPage, label: Text("Select your default page"), content: {
-                                ForEach(StartPage.allCases, id: \.self) {
-                                    Text($0.rawValue.capitalized)
+                                ForEach(0 ..< possibleStartPages.count) {
+                                    Text(possibleStartPages[$0])
                                 }
                             }).onChange(of: startPage, perform: { p in
-                                UserDefaults.standard.set(p.rawValue, forKey: "startPage")
+                                startPage = 0
+                                UserDefaults.standard.set(startPage, forKey: "startPage")
                             })
                                 .pickerStyle(MenuPickerStyle())
                                 .labelsHidden()
@@ -72,6 +75,9 @@ struct SettingsView: View {
                         Toggle(isOn: $showWishlist) {
                             Text("Show Wishlist")
                             BetaBadge()
+                        }.onChange(of: showWishlist) { _ in
+                            startPage = 0;
+                            //UserDefaults.standard.set(0, forKey: "startPage")
                         }
                             .padding(.horizontal)
                             .padding(.vertical, GlobalProps.PS)
@@ -148,6 +154,7 @@ struct SettingsView: View {
                             Image(systemName: "arrow.up.forward.app")
                                 .padding(.horizontal)
                                 .padding(.vertical, GlobalProps.PS)
+                                .foregroundColor(Color.blue)
                                 .font(.body)
                         }
                         HStack {
@@ -158,7 +165,22 @@ struct SettingsView: View {
                             Image(systemName: "arrow.up.forward.app")
                                 .padding(.horizontal)
                                 .padding(.vertical, GlobalProps.PS)
+                                .foregroundColor(Color.blue)
                                 .font(.body)
+                        }
+                        Button {
+                            showPatchnotes.toggle()
+                        } label: {
+                            HStack {
+                                Text("Patch Notes")
+                                    .padding(.horizontal)
+                                    .padding(.vertical, GlobalProps.PS)
+                                Spacer()
+                                Image(systemName: "arrow.up.forward.app")
+                                    .padding(.horizontal)
+                                    .padding(.vertical, GlobalProps.PS)
+                                    .font(.body)
+                            }
                         }
                         HStack {
                             Text("Version")
@@ -166,7 +188,7 @@ struct SettingsView: View {
                                 .padding(.horizontal)
                                 .padding(.vertical, GlobalProps.PS)
                             Spacer()
-                            Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "[??]")
+                            Text((Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "[??]") + " [" + (Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "??") + "]")
                                 .multilineTextAlignment(.trailing)
                                 .padding(.horizontal)
                                 .padding(.vertical, GlobalProps.PS)
@@ -186,7 +208,10 @@ struct SettingsView: View {
                 }.listStyle(.insetGrouped)
             }
         }.sheet(isPresented: $showSwitcher, content: {
-            IconSwitch(index: $iconIndex, t: t)
+            IconSwitch(index: $iconIndex)
+        }).sheet(isPresented: $showPatchnotes, content: {
+            PatchNotes()
         })
+        
     }
 }

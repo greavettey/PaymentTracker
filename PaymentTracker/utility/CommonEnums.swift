@@ -64,16 +64,9 @@ enum Currency: String, CaseIterable, Identifiable, Codable {
     
 }
 
-enum StartPage: String, CaseIterable, Identifiable, Codable {
-    case upcoming, debts, wishlist
-
-    var id: String { self.rawValue }
-}
-
 struct GlobalProps {
     static var SupportedIcons: [String] = ["PlayStation", "Kickstarter", "Amazon", "Steam", "Alibaba", "Walmart", "Indigo", "Indiegogo", "Best Buy", "Etsy", "Target", "ASOS", "Microsoft", "Adobe", "Apple", "Microsoft", "Xbox", "Wish"]
-    static var AppIcons: [String] = ["AppIcon", "Royalty", "Periwinkle", "Eyebite", "Subdued", "Midnight", "Melons", "Turquoise", "Cotton_Candy", "Neumorphic", "Pastel"]
+    static var AppIcons: [String] = ["AppIcon", "Royalty", "Periwinkle", "Eyebite", "Subdued", "Midnight", "Melons", "Turquoise", "Cotton_Candy", "Neumorphic", "Pastel"].sorted(by: <)
     static var PS: CGFloat = 6
     static var SubOps: [String] = ["Single", "Monthly", "Yearly"]
-
 }

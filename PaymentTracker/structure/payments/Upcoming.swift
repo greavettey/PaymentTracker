@@ -122,6 +122,7 @@ struct UpcomingEntryForm: View {
                         }
                     })
                     .pickerStyle(SegmentedPickerStyle())
+                    .fixedSize()
                     .labelsHidden()
                 }
                     .padding(.horizontal)
@@ -254,6 +255,7 @@ struct UpcomingEditForm: View {
                                     }
                                 })
                                 .pickerStyle(SegmentedPickerStyle())
+                                .fixedSize()
                                 .labelsHidden()
                             }
                                 .padding(.horizontal)
