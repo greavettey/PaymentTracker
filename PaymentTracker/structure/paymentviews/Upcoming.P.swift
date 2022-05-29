@@ -1,5 +1,5 @@
 //
-//  Wishlist.swift
+//  Upcoming.P.swift
 //  PaymentTracker
 //
 //  Created by Axel Greavette on 2022-05-19.
@@ -22,21 +22,28 @@ struct UpcomingPaymentView: View {
     @State var upcomingSheet = false;
     
     var body: some View {
-        VStack {
-            HStack {
-                Text(entry.name)
-                    .multilineTextAlignment(.leading)
-                Spacer()
-                Text(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.cost)))
-                    .multilineTextAlignment(.trailing)
+        let v = VStack {
+                HStack {
+                    Text(entry.name)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                    Text(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.cost)))
+                        .multilineTextAlignment(.trailing)
+                }
+                    .padding(.horizontal)
+                    .padding(.vertical, GlobalProps.PS)
+            }.sheet(isPresented: $upcomingSheet) {
+                UpcomingEditForm(upcomings: $upcomings, name: entry.name, date: string2Date(s: entry.date), cost: forTrailingZero(temp: entry.cost), type: entry.type, sub: entry.sub ?? 0, cc: Currency(rawValue:entry.cc) ?? .CAD, id: entry.id)
             }
-                .padding(.horizontal)
-                .padding(.vertical, GlobalProps.PS)
-        }.contextMenu {
-            ContextMenuEdit(showEditSheet: $upcomingSheet)
-            ContextMenuDeleteUpcoming(upcomings: $upcomings, toDelete: entry)
-        }.sheet(isPresented: $upcomingSheet) {
-            UpcomingEditForm(upcomings: $upcomings, name: entry.name, date: string2Date(s: entry.date), cost: forTrailingZero(temp: entry.cost), type: entry.type, sub: entry.sub ?? 0, cc: Currency(rawValue:entry.cc) ?? .CAD, id: entry.id)
+        if #available(iOS 15, *) {
+            v.swipeActions(allowsFullSwipe: false) {
+                SwipeUpcomingActions(showEdit: $upcomingSheet, upcomings: $upcomings, entry: entry)
+            }
+        } else if #available(iOS 14, *) {
+            v.contextMenu {
+                ContextMenuEdit(showEditSheet: $upcomingSheet)
+                ContextMenuDeleteUpcoming(upcomings: $upcomings, toDelete: entry)
+            }
         }
     }
 }
@@ -48,9 +55,10 @@ struct UpcomingEntryForm: View {
     @Binding var upcomings: [UpcomingPaymentEntry]
     
     var notifications = UserDefaults.standard.bool(forKey: "notifications")
-    
+    var notificationTime: Date = (UserDefaults.standard.object(forKey: "notificationTime") as! Date) ;
+
     @State var name: String = "";
-    @State var date: Date = Date();
+    @State var date: Date = Date().dayAfter;
     @State var cost: String = "";
     @State var type: String = "";
     @State var sub: Int = 0;
@@ -65,6 +73,7 @@ struct UpcomingEntryForm: View {
     }
         
     var body: some View {
+        let _ = print(notificationTime)
         Section(footer: footer(v: isValid)) {
             VStack {
                 HStack {
@@ -77,7 +86,7 @@ struct UpcomingEntryForm: View {
                     .padding(.vertical, GlobalProps.PS)
                 Divider()
                 HStack {
-                    DatePicker( "Due", selection: $date, in: Date.tomorrow.dayAfter..., displayedComponents: [.date])
+                    DatePicker( "Due", selection: $date, in: Date.tomorrow..., displayedComponents: [.date])
                         .padding(.horizontal)
                         .padding(.vertical, GlobalProps.PS)
                 }
@@ -144,7 +153,7 @@ struct UpcomingEntryForm: View {
             if (!notifications) {
                 self.presentationMode.wrappedValue.dismiss()
             } else {
-                queueNotification(t: 1, name: name, cost: cost, sub: sub, date: date, id: tmp.id)
+                queueNotification(t: 1, name: name, cost: cost, sub: sub, date: date, id: tmp.id, delivery: notificationTime)
                 self.presentationMode.wrappedValue.dismiss()
             }
         } label: {

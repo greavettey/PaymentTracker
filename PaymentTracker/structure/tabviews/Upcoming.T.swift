@@ -1,5 +1,5 @@
 //
-//  upcoming-view.swift
+//  Upcoming.T.swift
 //  PaymentTracker
 //
 //  Created by Axel Greavette on 2022-02-04.
@@ -11,7 +11,7 @@ struct UpcomingView: View {
     @Binding var upcomings: [UpcomingPaymentEntry]
     @Binding var debts: [DebtPaymentEntry]
     @Binding var wishes: [WishlistEntry]
-    
+        
     @State var showEditSheet = false;
     
     var body: some View {

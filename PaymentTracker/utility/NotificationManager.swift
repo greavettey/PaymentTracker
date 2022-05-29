@@ -7,10 +7,22 @@
 
 import SwiftUI
 
-func queueNotification(t: Int, name: String, cost: String, sub: Int, date: Date, id: UUID) {
+func queueNotification(t: Int, name: String, cost: String, sub: Int, date: Date, id: UUID, delivery: Date = Date()) {
+
+    var min, hour: Int
+    
+    if(Calendar.current.isDateInToday(date)) {
+        hour = 0
+        min = 0
+    } else {
+        hour = Calendar.current.dateComponents([.hour], from: delivery).hour!
+        min = Calendar.current.dateComponents([.minute], from: delivery).minute!
+    }
+    
     var components = Calendar.current.dateComponents((sub == 2) ? [.day, .month, .year] : [.day, .month], from: date)
     components.timeZone = TimeZone.current
-    components.hour = 1
+    components.hour = hour
+    components.minute = min
     
     let content = UNMutableNotificationContent()
     content.title = (t == 1 ? "Upcoming payment for " : "Payment due to ") + name
@@ -23,5 +35,6 @@ func queueNotification(t: Int, name: String, cost: String, sub: Int, date: Date,
     let request = UNNotificationRequest(identifier: id.uuidString, content: content, trigger: trigger)
 
     // add our notification request
+    print(request)
     UNUserNotificationCenter.current().add(request)
 }

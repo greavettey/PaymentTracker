@@ -1,5 +1,5 @@
 //
-//  PaymentTrackerApp.swift
+//  App.swift
 //  PaymentTracker
 //
 //  Created by Axel Greavette on 2022-02-04.
@@ -10,25 +10,29 @@ import SwiftUI
 @main
 struct PaymentTrackerApp: App {
     @Environment(\.colorScheme) private var colorScheme
-    @AppStorage("darkMode") var mode: Bool = UserDefaults.standard.bool(forKey: "darkMode");
+    @AppStorage("appearance") var appearance: Int = UserDefaults.standard.integer(forKey: "appearance");
     
     @StateObject private var DebtStore = DebtPaymentStore();
     @StateObject private var UpcomingStore = UpcomingPaymentStore();
     @StateObject private var WishStore = WishlistStore();
         
+    let formatter = DateFormatter()
+    
     init() {
-        // For testing UserDefaults.standard.set(true, forKey: "showPatchnotes")
-        UserDefaults.standard.register(defaults: [ "showWishlist": true, "showBreakdown": true, "showSymbols": true, "showAdded": true, "darkMode": colorScheme == .dark ? true : false, "showPatchnotes": ""]);
+        formatter.dateFormat = "HH:mm"
+
+        UserDefaults.standard.register(defaults: [ "showWishlist": true, "showBreakdown": true, "showSymbols": true, "showAdded": true, "appearance": [2], "showPatchnotes": "", "notificationTime": formatter.date(from: "00:00"), "debtIncrement": 10]);
         
         if(!UserDefaults.standard.bool(forKey: "notifications") && !UserDefaults.standard.bool(forKey: "askedForNotificationsAtFirstStartup")) {
+            UserDefaults.standard.set(Bundle.main.infoDictionary?["PassPhrase"] as? String ?? "salute emoji", forKey: "showPatchnotes")
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                 if success {
                     UserDefaults.standard.set(true, forKey: "askedForNotificationsAtFirstStartup")
-                    return UserDefaults.standard.set(true, forKey: "notifications")
+                    UserDefaults.standard.set(true, forKey: "notifications")
                 } else if let error = error {
                     print(error.localizedDescription)
                     UserDefaults.standard.set(true, forKey: "askedForNotificationsAtFirstStartup")
-                    return UserDefaults.standard.set(false, forKey: "notifications")
+                    UserDefaults.standard.set(false, forKey: "notifications")
                 }
             };
         }
@@ -82,7 +86,7 @@ struct PaymentTrackerApp: App {
                         WishStore.wishes = wishes
                     }
                 }
-            }.preferredColorScheme(mode == true ? .dark : .light)
+            }.preferredColorScheme([.dark, .light, nil][appearance])
         }
     }
 }

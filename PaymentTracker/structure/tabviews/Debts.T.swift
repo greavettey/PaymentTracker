@@ -1,5 +1,5 @@
 //
-//  DebtsView.swift
+//  Debts.T.swift
 //  PaymentTracker
 //
 //  Created by Axel Greavette on 2022-02-04.
@@ -45,7 +45,7 @@ struct DebtsView: View {
                                     .frame(width: 15, height: 15)
                             }
                         }) {
-                            DebtPaymentView(entry: entry, debts: $debts);
+                            DebtPaymentView(debts: $debts, entry: entry);
                         }
                     }
                 }

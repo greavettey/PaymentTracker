@@ -65,8 +65,9 @@ enum Currency: String, CaseIterable, Identifiable, Codable {
 }
 
 struct GlobalProps {
-    static var SupportedIcons: [String] = ["PlayStation", "Kickstarter", "Amazon", "Steam", "Alibaba", "Walmart", "Indigo", "Indiegogo", "Best Buy", "Etsy", "Target", "ASOS", "Microsoft", "Adobe", "Apple", "Microsoft", "Xbox", "Wish"]
+    static var SupportedIcons: [String] = ["PlayStation", "Kickstarter", "Amazon", "Steam", "Alibaba", "Walmart", "Indigo", "Indiegogo", "Best Buy", "Etsy", "Target", "ASOS", "Microsoft", "Adobe", "Apple", "Microsoft", "Xbox", "Wish", "StockX"]
     static var AppIcons: [String] = ["AppIcon", "Royalty", "Periwinkle", "Eyebite", "Subdued", "Midnight", "Melons", "Turquoise", "Cotton_Candy", "Neumorphic", "Pastel"].sorted(by: <)
     static var PS: CGFloat = 6
     static var SubOps: [String] = ["Single", "Monthly", "Yearly"]
+    static var AppOps: [String] = ["Dark", "Light", "Auto"]
 }

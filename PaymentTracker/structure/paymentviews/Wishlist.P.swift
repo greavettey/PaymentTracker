@@ -1,5 +1,5 @@
 //
-//  Wishlist.swift
+//  Wishlist.P.swift
 //  PaymentTracker
 //
 //  Created by Axel Greavette on 2022-05-19.
@@ -22,21 +22,34 @@ struct WishlistPaymentView: View {
     @State var wishSheet = false;
     
     var body: some View {
-        VStack {
+        let v = VStack {
             HStack {
-                Link(entry.name, destination: URL(string: entry.link)!)
-                    .multilineTextAlignment(.leading)
+                if(entry.link == "no link sadge") {
+                    Text(entry.name)
+                        .multilineTextAlignment(.leading)
+                } else {
+                    Link(entry.name, destination: URL(string: entry.link)!)
+                        .multilineTextAlignment(.leading)
+                }
                 Spacer()
                 Text(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.cost)))
                     .multilineTextAlignment(.trailing)
             }
                 .padding(.horizontal)
                 .padding(.vertical, GlobalProps.PS)
-        }.contextMenu {
-            ContextMenuEdit(showEditSheet: $wishSheet)
-            ContextMenuDeleteWish(wishes: $wishes, toDelete: entry)
         }.sheet(isPresented: $wishSheet) {
             WishlistEditForm(wishes: $wishes, name: entry.name, link: entry.link, cost: forTrailingZero(temp: entry.cost), type: entry.type, added: entry.added ?? "04/03/1984", cc: Currency(rawValue:entry.cc) ?? .CAD, id: entry.id)
+        }
+        
+        if #available(iOS 15, *) {
+            v.swipeActions(allowsFullSwipe: false) {
+                SwipeWishlistActions(showEdit: $wishSheet, wishes: $wishes, entry: entry)
+            }
+        } else if #available(iOS 14, *) {
+            v.contextMenu {
+                ContextMenuEdit(showEditSheet: $wishSheet)
+                ContextMenuDeleteWish(wishes: $wishes, toDelete: entry)
+            }
         }
     }
 }
@@ -56,7 +69,6 @@ struct WishlistEntryForm: View {
     
     var isValid: Bool {
             !name.isEmpty &&
-            !link.isEmpty &&
             !cost.isEmpty &&
             !type.isEmpty
     }
@@ -114,7 +126,7 @@ struct WishlistEntryForm: View {
                 HStack {
                     Text("Link")
                         .multilineTextAlignment(.leading)
-                    TextField("https://bitly.com/98K8eH", text: $link)
+                    TextField("Optional", text: $link)
                         .multilineTextAlignment(.trailing)
                 }
                     .padding(.horizontal)
@@ -123,7 +135,7 @@ struct WishlistEntryForm: View {
             }
         }
         Button {
-            wishes.append(WishlistEntry(name: name, cost: Double(cost)!, type: type, added: date2String(d: Date()), edited: nil, cc: cc.rawValue, link: link))
+            wishes.append(WishlistEntry(name: name, cost: Double(cost)!, type: type, added: date2String(d: Date()), edited: nil, cc: cc.rawValue, link: link.isEmpty ? "no link sadge" : link))
             self.presentationMode.wrappedValue.dismiss()
         } label: {
             HStack {
@@ -146,12 +158,12 @@ struct footer: View {
         if(v) {
             HStack {
                 Image(systemName: "checkmark.square.fill")
-                Text("All fields are filled.")
+                Text("All required fields are filled.")
             }
         } else {
             HStack {
                 Image(systemName: "x.square.fill")
-                Text("All fields must be filled.")
+                Text("All required fields must be filled.")
             }
         }
     }

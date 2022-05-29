@@ -1,5 +1,5 @@
 //
-//  Debt.swift
+//  Debt.P.swift
 //  PaymentTracker
 //
 //  Created by Axel Greavette on 2022-05-19.
@@ -10,22 +10,24 @@ import SwiftUI
 import Combine
 
 // Payment View
-struct DebtPaymentView: View {
-    var entry: DebtPaymentEntry;
-    
+struct DebtPaymentView: View {    
     @Binding var debts: [DebtPaymentEntry]
-    
-    @State var debtSheet = false;
 
+    var entry: DebtPaymentEntry;
+    var perc: Double { return Double(round(100 * (entry.paid / entry.amount)) / 100) * 100 }
+    var notifications = UserDefaults.standard.bool(forKey: "notifications")
+
+    @State var debtSheet = false;
+    @State var stepperValue: Int = 10
+
+    @AppStorage("debtIncrement") var increment = UserDefaults.standard.double(forKey: "debtIncrement")
     @AppStorage("showSymbols") var showSymbols: Bool = UserDefaults.standard.bool(forKey: "showSymbols");
     @AppStorage("showCC") var showCC: Bool = UserDefaults.standard.bool(forKey: "showCC");
     @AppStorage("currency") var c: String = UserDefaults.standard.string(forKey: "currency") ?? "CAD";
     @AppStorage("showBreakdown") var showBreakdown: Bool = UserDefaults.standard.bool(forKey: "showBreakdown");
     
-    var perc: Double { return Double(round(100 * (entry.paid / entry.amount)) / 100) * 100 }
-
     var body: some View {
-        ZStack {
+        let v = ZStack {
             VStack {
                 HStack {
                     if(showBreakdown) {
@@ -53,35 +55,92 @@ struct DebtPaymentView: View {
                     }
                     Spacer()
                     if(showBreakdown) {
-                        VStack {
-                            HStack {
-                                Spacer()
-                                Text(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.amount - entry.paid)))
-                                    .padding([.leading, .trailing])
-                                    .padding(.top, GlobalProps.PS)
-                                    .multilineTextAlignment(.trailing)
+                        Menu {
+                            Button(action: {
+                                let orig = debts.firstIndex{ $0.id == entry.id }!
+                                let new = DebtPaymentEntry(name: entry.name, date: entry.date, added: entry.added, edited: date2String(d: Date()), amount: entry.amount, paid: entry.paid+increment, cc: entry.cc)
+                                debts[orig] = new
+                                
+                                if (notifications){
+                                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [entry.id.uuidString])
+                                    queueNotification(t: 2, name: new.name, cost: forTrailingZero(temp: new.amount-new.paid), sub: 0, date: string2Date(s: new.date), id: new.id)
+                                }
+                            }) {
+                                Label("Add \(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: increment)))", systemImage: "plus.circle")
                             }
-                            HStack {
-                                Spacer()
-                                Text(checkPunctuation(showSymbols: showSymbols, showCurrency: false, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.paid)) + " paid")
-                                    .font(.caption)
-                                    .foregroundColor(.green)
-                                Text(",")
-                                    .font(.caption)
-                                    .padding(.horizontal, -8)
-                                Text(checkPunctuation(showSymbols: showSymbols, showCurrency: false, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.amount)) + " sum")
-                                    .font(.caption)
-                                    .padding(.trailing)
-                                    .padding(.leading, -8)
-                                    .foregroundColor(.red)
+                            Button(action: {
+                                let orig = debts.firstIndex{ $0.id == entry.id }!
+                                let new = DebtPaymentEntry(name: entry.name, date: entry.date, added: entry.added, edited: date2String(d: Date()), amount: entry.amount, paid: entry.paid-increment, cc: entry.cc)
+                                debts[orig] = new
+                                
+                                if (notifications){
+                                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [entry.id.uuidString])
+                                    queueNotification(t: 2, name: new.name, cost: forTrailingZero(temp: new.amount-new.paid), sub: 0, date: string2Date(s: new.date), id: new.id)
+                                }
+                            }) {
+                                Label("Remove \(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: increment)))", systemImage: "minus.circle")
                             }
-                                .padding(.bottom, GlobalProps.PS)
+                        } label: {
+                            VStack {
+                                HStack {
+                                    Spacer()
+                                    Text(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.amount - entry.paid)))
+                                        .foregroundColor(.primary)
+                                        .padding([.leading, .trailing])
+                                        .padding(.top, GlobalProps.PS)
+                                        .multilineTextAlignment(.trailing)
+                                }
+                                HStack {
+                                    Spacer()
+                                    Text(checkPunctuation(showSymbols: showSymbols, showCurrency: false, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.paid)) + " paid")
+                                        .font(.caption)
+                                        .foregroundColor(.green)
+                                    Text(",")
+                                        .font(.caption)
+                                        .foregroundColor(.primary)
+                                        .padding(.horizontal, -8)
+                                    Text(checkPunctuation(showSymbols: showSymbols, showCurrency: false, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.amount)) + " sum")
+                                        .font(.caption)
+                                        .padding(.trailing)
+                                        .padding(.leading, -8)
+                                        .foregroundColor(.red)
+                                }
+                                    .padding(.bottom, GlobalProps.PS)
+                            }
                         }
                     } else {
-                        Text(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.amount)))
-                            .multilineTextAlignment(.trailing)
-                            .padding(.horizontal)
-                            .padding(.vertical, GlobalProps.PS)
+                        Menu {
+                            Button(action: {
+                                let orig = debts.firstIndex{ $0.id == entry.id }!
+                                let new = DebtPaymentEntry(name: entry.name, date: entry.date, added: entry.added, edited: date2String(d: Date()), amount: entry.amount, paid: entry.paid+increment, cc: entry.cc)
+                                debts[orig] = new
+                                
+                                if (notifications){
+                                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [entry.id.uuidString])
+                                    queueNotification(t: 2, name: new.name, cost: forTrailingZero(temp: new.amount-new.paid), sub: 0, date: string2Date(s: new.date), id: new.id)
+                                }
+                            }) {
+                                Label("Add \(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: increment)))", systemImage: "plus.circle")
+                            }
+                            Button(action: {
+                                let orig = debts.firstIndex{ $0.id == entry.id }!
+                                let new = DebtPaymentEntry(name: entry.name, date: entry.date, added: entry.added, edited: date2String(d: Date()), amount: entry.amount, paid: entry.paid-increment, cc: entry.cc)
+                                debts[orig] = new
+                                
+                                if (notifications){
+                                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [entry.id.uuidString])
+                                    queueNotification(t: 2, name: new.name, cost: forTrailingZero(temp: new.amount-new.paid), sub: 0, date: string2Date(s: new.date), id: new.id)
+                                }
+                            }) {
+                                Label("Remove \(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: increment)))", systemImage: "minus.circle")
+                            }
+                        } label: {
+                            Text(checkPunctuation(showSymbols: showSymbols, showCurrency: showCC, globalDefault: c, def: entry.cc, value: forTrailingZero(temp: entry.amount)))
+                                .foregroundColor(.primary)
+                                .multilineTextAlignment(.trailing)
+                                .padding(.horizontal)
+                                .padding(.vertical, GlobalProps.PS)
+                        }
                     }
                 }
                 Divider()
@@ -108,12 +167,20 @@ struct DebtPaymentView: View {
                 }
                     .padding(.horizontal)
             }
-        }.contextMenu {
-            ContextMenuEdit(showEditSheet: $debtSheet)
-            if(entry.paid/entry.amount != 1){ ContextMenuMarkAsPaid(debts: $debts, toFinish: entry.id) }
-            ContextMenuDeleteDebt(debts: $debts, toDelete: entry)
         }.sheet(isPresented: $debtSheet) {
             DebtEditForm(debts: $debts, name: entry.name, date: string2Date(s: entry.date), added: entry.added ?? "12/27/2002", amount: forTrailingZero(temp: entry.amount), paid: forTrailingZero(temp: entry.paid), cc: Currency(rawValue:entry.cc) ?? .CAD, id: entry.id)
+        }
+        
+        if #available(iOS 15, *) {
+            v.swipeActions(allowsFullSwipe: false) {
+                SwipeDebtActions(showEdit: $debtSheet, debts: $debts, entry: entry)
+            }
+        } else if #available(iOS 14, *) {
+            v.contextMenu {
+                ContextMenuEdit(showEditSheet: $debtSheet)
+                if(entry.paid/entry.amount != 1){ ContextMenuMarkAsPaid(debts: $debts, toFinish: entry.id) }
+                ContextMenuDeleteDebt(debts: $debts, toDelete: entry)
+            }
         }
     }
 }
@@ -127,7 +194,7 @@ struct DebtEntryForm: View {
     var notifications = UserDefaults.standard.bool(forKey: "notifications")
     
     @State var name: String = "";
-    @State var date: Date = Date();
+    @State var date: Date = Date().dayAfter;
     @State var amount: String = "";
     @State var paid: String = "";
     
